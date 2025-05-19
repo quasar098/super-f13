@@ -38,6 +38,8 @@ namespace SuperF13
 
         private IntPtr _hookID = IntPtr.Zero;
 
+        private BufferedTextBox inputBox;
+
         public Form1()
         {
             InitializeComponent();
@@ -64,7 +66,7 @@ namespace SuperF13
             // Optional: Hide from Alt+Tab
             SetWindowStyle();
 
-            TextBox inputBox = new TextBox
+            inputBox = new BufferedTextBox
             {
                 Location = new Point(INPUTBOX_PADDING, INPUTBOX_PADDING),
                 Size = new Size(WINDOW_WIDTH - INPUTBOX_PADDING * 2, INPUTBOX_HEIGHT - INPUTBOX_PADDING * 2),
@@ -73,6 +75,17 @@ namespace SuperF13
                 BackColor = COLOR_BG,
                 ForeColor = Color.White
             };
+            inputBox.KeyDown += (s, e) => {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    // todo handle doing stuff
+
+                    HideStuffs();
+                } else
+                {
+                    // todo handle searching
+                }
+            };
 
             this.Load += (s, e) => {
                 this.Hide(); // This will work reliably
@@ -80,11 +93,41 @@ namespace SuperF13
                 
                 this.Controls.Add(inputBox);
             };
+        }
 
+        // idk if this helps double buffering
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;  // WS_EX_COMPOSITED
+                return cp;
+            }
+        }
+
+        public void ShowStuffs()
+        {
+            overlayForm = new Form
+            {
+                FormBorderStyle = FormBorderStyle.None,
+                WindowState = FormWindowState.Maximized,
+                BackColor = Color.Black,
+                Opacity = 0.2f,  // 20% opacity
+                ShowInTaskbar = false,
+                TopMost = false
+            };
+
+            overlayForm.Show();
+            overlayActive = true;
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            this.BringToFront();
         }
 
         public void HideStuffs()
         {
+            inputBox.Clear();
             this.WindowState = FormWindowState.Minimized;
             this.BringToFront();
             this.Hide();
@@ -92,6 +135,7 @@ namespace SuperF13
             {
                 overlayActive = false;
                 overlayForm.Close();
+                overlayForm = null;
             }
         }
 
@@ -124,24 +168,7 @@ namespace SuperF13
             }
             else
             {
-                overlayForm = new Form
-                {
-                    FormBorderStyle = FormBorderStyle.None,
-                    WindowState = FormWindowState.Maximized,
-                    BackColor = Color.Black,
-                    Opacity = 0.2f,  // 20% opacity
-                    ShowInTaskbar = false,
-                    TopMost = false
-                };
-
-                overlayForm.Show();
-                overlayActive = true;
-
-                this.Show();
-                this.WindowState = FormWindowState.Normal;
-
-                this.BringToFront();
-
+                ShowStuffs();
             }
         }
 
