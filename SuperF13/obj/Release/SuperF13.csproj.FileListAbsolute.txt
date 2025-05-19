@@ -1,0 +1,8 @@
+D:\Coding\SuperF13\SuperF13\SuperF13\bin\Release\SuperF13.exe.config
+D:\Coding\SuperF13\SuperF13\SuperF13\bin\Release\SuperF13.exe
+D:\Coding\SuperF13\SuperF13\SuperF13\bin\Release\SuperF13.pdb
+D:\Coding\SuperF13\SuperF13\SuperF13\obj\Release\SuperF13.Properties.Resources.resources
+D:\Coding\SuperF13\SuperF13\SuperF13\obj\Release\SuperF13.csproj.GenerateResource.cache
+D:\Coding\SuperF13\SuperF13\SuperF13\obj\Release\SuperF13.csproj.CoreCompileInputs.cache
+D:\Coding\SuperF13\SuperF13\SuperF13\obj\Release\SuperF13.exe
+D:\Coding\SuperF13\SuperF13\SuperF13\obj\Release\SuperF13.pdb
